@@ -51,10 +51,15 @@ const IngredientCard = () => {
             )
     }, [ingredientList]);
 
+    const removeIngr = () => {
+        setIngredientList([]);
+    }
+
     return(
         <>
         <div className="row">
             <div className="col-4">
+            <img height="200" width="400" src="/my-recipes.svg" alt="NoPhoto"/>
             <form className="form-floating" onSubmit={updateList}> 
                 <div class="form-floating mb-3">
                   <input type="text" id="newIngr" name="ingredient" className="form-control" placeholder="Eggs,Chicken,Broccoli"/>
@@ -69,8 +74,11 @@ const IngredientCard = () => {
                         )}
                     </ol>
             <div hidden={true} id="listAlert"></div>
-            <div className="col-2"></div>
+            
         </div>
+        <div className="col-2 text-center">
+                <button className="btn btn-primary" onClick={removeIngr}>Remove Ingredients</button>
+            </div>
         </div>
         <div className="row">
             {console.log(recipeList)}
