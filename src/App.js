@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import Kanye from './Kanye';
+
+import './bootstrap.css';
 import IngredientCard from './IngredientsCard';
 
 function App() {
+
   return (
-    <div className="App">
-       <Kanye />
+    <div className="container-fluid pt-3" >
+      
+      
        <IngredientCard />
+     
     </div>
   );
 }

@@ -4,10 +4,7 @@ const Ingredient = ({ingredientName}) => {
 
     const [name, setName] = useState(ingredientName);
     return(
-        <div>
-            <label for="ingr">Ingredient N.</label>
-            <p>{name}</p>
-        </div>
+             <li class="list-group-item" style={{}}>{name}</li>
     );
 }
 

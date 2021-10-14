@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import Ingredient from "./Ingredient";
+import env from 'react-dotenv';
+import RecipeCard from "./RecipeCard";
 
 const IngredientCard = () => {
 
     const [ingredientList, setIngredientList] = useState([]);
+    const [recipeList, setRecipeList] = useState([]);
 
     const updateList = (e) => {
         e.preventDefault();
@@ -30,19 +33,50 @@ const IngredientCard = () => {
     }
 
     useEffect(() => {
-        
-    },[ingredientList]);
+        var ingrQuery = "";
+        ingredientList.map(ingr => ingrQuery += "," + ingr);
+        fetch(env.SPOON_URL + ingrQuery + '&number=6&apiKey=' + env.API_KEY,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            }
+        )
+            .then(
+                res => res.json()
+            )
+            .then(
+                (data) => {
+                    setRecipeList(data);
+                }
+            )
+    }, [ingredientList]);
 
     return(
-        <div>
-            {ingredientList && ingredientList.map(ingr =>
-                <Ingredient ingredientName={ingr}/>
-                )}
-            <div hidden={true} id="listAlert"></div>
-            <form onSubmit={updateList}>
-                <input id="newIngr" type="text" name="ingredient"/>
+        <>
+        <div className="row">
+            <div className="col-4">
+            <form className="form-floating" onSubmit={updateList}> 
+                <div class="form-floating mb-3">
+                  <input type="text" id="newIngr" name="ingredient" className="form-control" placeholder="Eggs,Chicken,Broccoli"/>
+                  <label for="newIngr">Eggs,Chicken,Broccoli</label>
+                </div>
             </form>
+            </div>
+        <div className="col-6 text-center">
+                    <ol class="list-group list-group-numbered">
+                        {ingredientList && ingredientList.map(ingr =>
+                            <Ingredient ingredientName={ingr} />
+                        )}
+                    </ol>
+            <div hidden={true} id="listAlert"></div>
+            <div className="col-2"></div>
         </div>
+        </div>
+        <div className="row">
+            {console.log(recipeList)}
+        <RecipeCard recipes={recipeList}/>
+        </div>
+        </>
     );
 }
 
